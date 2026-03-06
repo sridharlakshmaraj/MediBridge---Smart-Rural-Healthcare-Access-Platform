@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#1e5fa0">
+    <meta name="description" content="MediBridge - Smart Rural Healthcare Access Platform">
+
+    <title>MediBridge - Rural Healthcare</title>
+
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/png" href="assets/icons/favicon-32x32.png">
+    <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/themes.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="navbar-brand">
+                <h1 class="logo">🏥 MediBridge</h1>
+            </div>
+            <div class="navbar-menu" id="navMenu">
+                <a href="#" class="nav-link active" data-page="dashboard" data-i18n="nav_home">Dashboard</a>
+                <a href="#" class="nav-link" data-page="patients" data-i18n="nav_patients">Patients</a>
+                <a href="#" class="nav-link" data-page="appointments" data-i18n="nav_appointments">Appointments</a>
+                <a href="#" class="nav-link" data-page="history" data-i18n="nav_history">History</a>
+                <a href="#" class="nav-link" data-page="profile" data-i18n="nav_profile">Profile</a>
+                <select id="websiteLanguage" style="padding: 0.5rem; border-radius: 4px; border: 1px solid #ccc; background: white; cursor: pointer; margin: 0 1rem;" onchange="changeWebsiteLanguage(this.value)">
+                    <option value="en">🇬🇧 English</option>
+                    <option value="ta">🇮🇳 தமிழ்</option>
+                </select>
+                <a href="#" class="nav-link" id="logoutBtn" data-i18n="nav_logout">Logout</a>
+            </div>
+            <button class="navbar-toggle" id="navToggle">☰</button>
+        </div>
+    </nav>
+
+    <!-- Emergency Alert Modal -->
+    <div id="emergencyModal" class="modal hidden">
+        <div class="modal-content emergency-modal">
+            <div class="modal-header">
+                <h2>🚨 Emergency Alert</h2>
+                <button class="close-btn" id="closeEmergency">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to send an emergency alert?</p>
+                <p class="emergency-warning">Your location and medical information will be shared with nearby healthcare providers.</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancelEmergency">Cancel</button>
+                <button class="btn btn-danger" id="confirmEmergency">Send Emergency Alert</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- E-Prescription Modal -->
+    <div id="ePrescriptionModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>💊 E-Prescription</h2>
+                <button class="close-btn" id="closeEPrescription">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="ePrescriptionForm">
+                    <div class="form-row">
+                        <div class="form-group form-col-2">
+                            <label for="prescPatientName">Patient Name *</label>
+                            <input type="text" id="prescPatientName" required>
+                        </div>
+                        <div class="form-group form-col-2">
+                            <label for="prescPatientAge">Age *</label>
+                            <input type="number" id="prescPatientAge" required min="0">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group form-col-2">
+                            <label for="prescDiagnosis">Diagnosis *</label>
+                            <input type="text" id="prescDiagnosis" required>
+                        </div>
+                        <div class="form-group form-col-2">
+                            <label for="prescDate">Date *</label>
+                            <input type="date" id="prescDate" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="prescMedications">Medications/Drugs *</label>
+                        <textarea id="prescMedications" rows="4" placeholder="Format: Drug Name - Dosage - Frequency&#10;Example: Amoxicillin - 500mg - 3 times daily&#10;Add one medication per line" required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="prescInstructions">Instructions for Patient</label>
+                        <textarea id="prescInstructions" rows="3" placeholder="Special instructions, warnings, side effects, etc."></textarea>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group form-col-2">
+                            <label for="prescDoctorName">Doctor Name *</label>
+                            <input type="text" id="prescDoctorName" required>
+                        </div>
+                        <div class="form-group form-col-2">
+                            <label for="prescLicenseNo">License No *</label>
+                            <input type="text" id="prescLicenseNo" required>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancelEPrescription">Cancel</button>
+                <button class="btn btn-success" id="downloadEPrescription">📥 Download PDF</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Prescription Update Modal -->
+    <div id="prescriptionUpdateModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>📝 Update Prescription</h2>
+                <button class="close-btn" id="closePrescriptionUpdate">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="prescriptionUpdateForm">
+                    <div class="form-row">
+                        <div class="form-group form-col-2">
+                            <label for="updatePrescId">Prescription ID *</label>
+                            <input type="text" id="updatePrescId" required placeholder="Enter prescription ID">
+                        </div>
+                        <div class="form-group form-col-2">
+                            <label for="updatePatientName">Patient Name *</label>
+                            <input type="text" id="updatePatientName" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group form-col-2">
+                            <label for="updateDiagnosis">Diagnosis *</label>
+                            <input type="text" id="updateDiagnosis" required>
+                        </div>
+                        <div class="form-group form-col-2">
+                            <label for="updateDate">Update Date *</label>
+                            <input type="date" id="updateDate" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="updateMedications">Updated Medications/Drugs *</label>
+                        <textarea id="updateMedications" rows="4" placeholder="Format: Drug Name - Dosage - Frequency&#10;Example: Amoxicillin - 500mg - 3 times daily" required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="updateInstructions">Updated Instructions</label>
+                        <textarea id="updateInstructions" rows="3" placeholder="Special instructions, warnings, side effects, etc."></textarea>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group form-col-2">
+                            <label for="updateDoctorName">Doctor Name *</label>
+                            <input type="text" id="updateDoctorName" required>
+                        </div>
+                        <div class="form-group form-col-2">
+                            <label for="updateStatus">Status *</label>
+                            <select id="updateStatus" required>
+                                <option value="active">Active</option>
+                                <option value="completed">Completed</option>
+                                <option value="cancelled">Cancelled</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="updateNotes">Update Notes</label>
+                        <textarea id="updateNotes" rows="2" placeholder="Notes about this update..."></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancelPrescriptionUpdate">Cancel</button>
+                <button class="btn btn-primary" id="submitPrescriptionUpdate">Update Prescription</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content Area -->
+    <main class="main-container">
+        <!-- Login Page -->
+        <section id="page-login" class="page active">
+            <div class="login-container">
+                <div class="login-box">
+                    <div class="login-header">
+                        <h2>Welcome to MediBridge</h2>
+                        <p>Connect to Healthcare Anywhere</p>
+                    </div>
+
+                    <form id="loginForm" class="login-form">
+                        <div class="form-group">
+                            <label for="loginUsername">Username or Email</label>
+                            <input type="text" id="loginUsername" required placeholder="Enter username">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="loginPassword">Password</label>
+                            <div class="password-input-wrapper">
+                                <input type="password" id="loginPassword" required placeholder="Enter password">
+                                <button type="button" class="password-toggle" id="loginPasswordToggle" onclick="togglePasswordVisibility('loginPassword', 'loginPasswordToggle')">
+                                    <span class="toggle-icon">👁️</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="userRole">I am a:</label>
+                            <select id="userRole" required>
+                                <option value="">Select role</option>
+                                <option value="patient">Patient</option>
+                                <option value="provider">Healthcare Provider</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-block">Login</button>
+                    </form>
+
+                    <div class="login-footer">
+                        <p>Don't have an account? <a href="#" id="toggleRegister">Register here</a></p>
+                        <p><a href="#" id="toggleForgotPassword">Forgot Password?</a></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Register Page -->
+        <section id="page-register" class="page hidden">
+            <div class="login-container">
+                <div class="login-box">
+                    <div class="login-header">
+                        <h2>Create Account</h2>
+                        <p>Join MediBridge Today</p>
+                    </div>
+
+                    <form id="registerForm" class="login-form">
+                        <div class="form-group">
+                            <label for="regUsername">Username</label>
+                            <input type="text" id="regUsername" required placeholder="Choose username">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="regEmail">Email</label>
+                            <input type="email" id="regEmail" required placeholder="Your email">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="regPassword">Password</label>
+                            <div class="password-input-wrapper">
+                                <input type="password" id="regPassword" required placeholder="Create password">
+                                <button type="button" class="password-toggle" id="regPasswordToggle" onclick="togglePasswordVisibility('regPassword', 'regPasswordToggle')">
+                                    <span class="toggle-icon">👁️</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="regRole">I am a:</label>
+                            <select id="regRole" required>
+                                <option value="">Select role</option>
+                                <option value="patient">Patient</option>
+                                <option value="provider">Healthcare Provider</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group" id="patientFields" style="display: none;">
+                            <label for="fullName">Full Name</label>
+                            <input type="text" id="fullName" placeholder="Your full name">
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-block">Register</button>
+                    </form>
+
+                    <div class="login-footer">
+                        <p>Already have an account? <a href="#" id="toggleLogin">Login here</a></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Forgot Password Page -->
+        <section id="page-forgot-password" class="page hidden">
+            <div class="login-container">
+                <div class="login-box">
+                    <div class="login-header">
+                        <h2>Reset Password</h2>
+                        <p>Recover Your Account</p>
+                    </div>
+
+                    <!-- Step 1: Enter Email -->
+                    <div id="forgotStep1">
+                        <form id="forgotPasswordForm" class="login-form">
+                            <div class="form-group">
+                                <label for="forgotEmail">Email Address</label>
+                                <input type="email" id="forgotEmail" required placeholder="Enter your registered email">
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-block">Send OTP</button>
+                        </form>
+                        <div class="login-footer">
+                            <p><a href="#" id="backToLogin1">Back to Login</a></p>
+                        </div>
+                    </div>
+
+                    <!-- Step 2: Verify OTP -->
+                    <div id="forgotStep2" style="display: none;">
+                        <form id="verifyOtpForm" class="login-form">
+                            <p style="text-align: center; color: #666; margin-bottom: 1.5rem;">Enter the 6-digit OTP sent to your email</p>
+                            <div class="form-group">
+                                <label for="otpCode">OTP Code</label>
+                                <input type="text" id="otpCode" maxlength="6" required placeholder="000000" pattern="[0-9]{6}">
+                            </div>
+                            <p style="font-size: 0.9rem; text-align: center; color: #999;">
+                                <span id="otpTimer"></span>
+                            </p>
+                            <button type="submit" class="btn btn-primary btn-block">Verify OTP</button>
+                        </form>
+                        <div class="login-footer">
+                            <p><a href="#" id="resendOtp">Resend OTP</a> | <a href="#" id="backToLogin2">Back to Login</a></p>
+                        </div>
+                    </div>
+
+                    <!-- Step 3: Reset Password -->
+                    <div id="forgotStep3" style="display: none;">
+                        <form id="resetPasswordForm" class="login-form">
+                            <div class="form-group">
+                                <label for="newPassword">New Password</label>
+                                <div class="password-input-wrapper">
+                                    <input type="password" id="newPassword" required placeholder="Enter new password" minlength="6">
+                                    <button type="button" class="password-toggle" id="newPasswordToggle" onclick="togglePasswordVisibility('newPassword', 'newPasswordToggle')">
+                                        <span class="toggle-icon">👁️</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="confirmPassword">Confirm Password</label>
+                                <div class="password-input-wrapper">
+                                    <input type="password" id="confirmPassword" required placeholder="Confirm password" minlength="6">
+                                    <button type="button" class="password-toggle" id="confirmPasswordToggle" onclick="togglePasswordVisibility('confirmPassword', 'confirmPasswordToggle')">
+                                        <span class="toggle-icon">👁️</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-block">Reset Password</button>
+                        </form>
+                        <div class="login-footer">
+                            <p><a href="#" id="backToLogin3">Back to Login</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Dashboard Page -->
+        <section id="page-dashboard" class="page hidden">
+            <div class="container">
+                <div class="dashboard-header">
+                    <h2>Dashboard</h2>
+                    <p id="welcomeMessage" class="welcome-text"></p>
+                </div>
+
+                <!-- Emergency Button -->
+                <div class="emergency-section">
+                    <button id="emergencyBtn" class="btn btn-danger btn-large emergency-button">
+                         EMERGENCY
+                    </button>
+                </div>
+
+                <!-- Quick Stats -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h3 id="appointmentCount">0</h3>
+                        <p>Upcoming Appointments</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3 id="patientCount">0</h3>
+                        <p>Patients</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3 id="messageCount">0</h3>
+                        <p>Unread Messages</p>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="actions-section">
+                    <h3>Quick Actions</h3>
+                    <div class="action-buttons">
+                        <button class="action-btn" data-page="patients">
+                            👥 Manage Patients
+                        </button>
+                        <button class="action-btn" onclick="openQuickAppointmentModal()">
+                            📅 Schedule Appointment
+                        </button>
+                        <button class="action-btn" onclick="openChatbot()">
+                            💬 Health Chatbot
+                        </button>
+                        <button class="action-btn" data-page="history">
+                            📋 View History
+                        </button>
+                        <button class="action-btn" id="ePrescriptionBtn">
+                            💊 E-Prescription
+                        </button>
+                        <button class="action-btn" onclick="openMedicineStatusModal()">
+                            💉 Medicine Status
+                        </button>
+                        <button class="action-btn" onclick="openMedicinePrebookingModal()">
+                            📋 Pre-book Medicines
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Patients Page -->
+        <section id="page-patients" class="page hidden">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Patients</h2>
+                    <button id="addPatientBtn" class="btn btn-primary">+ Add Patient</button>
+                </div>
+
+                <div class="search-bar">
+                    <input type="text" id="patientSearch" placeholder="Search patients...">
+                </div>
+
+                <div id="patientsList" class="patients-list">
+                    <p class="empty-state">No patients found</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Add/Edit Patient Modal -->
+        <div id="patientModal" class="modal hidden">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 id="patientModalTitle">Add Patient</h2>
+                    <button class="close-btn" id="closePatientModal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <form id="patientForm">
+                        <div class="form-group">
+                            <label for="patientName">Full Name *</label>
+                            <input type="text" id="patientName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="patientAge">Age *</label>
+                            <input type="number" id="patientAge" min="0" max="150" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="patientPhone">Phone *</label>
+                            <input type="tel" id="patientPhone" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="patientEmail">Email</label>
+                            <input type="email" id="patientEmail">
+                        </div>
+                        <div class="form-group">
+                            <label for="patientDiagnosis">Medical History / Diagnosis</label>
+                            <textarea id="patientDiagnosis" rows="4"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Save Patient</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Appointments Page -->
+        <section id="page-appointments" class="page hidden">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Appointments</h2>
+                    <button id="bookAppointmentBtn" class="btn btn-primary">+ Book Appointment</button>
+                </div>
+
+                <div id="appointmentsList" class="appointments-list">
+                    <p class="empty-state">No appointments scheduled</p>
+                </div>
+            </div>
+        </section>
+
+    <!-- Quick Appointment Modal -->
+    <div id="quickAppointmentModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>📅 Schedule Appointment</h2>
+                <button class="close-btn" onclick="closeQuickAppointmentModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="quickAppointmentForm">
+                    <div class="form-group">
+                        <label for="quickAppointmentDoctor">Doctor/Healthcare Provider Name *</label>
+                        <input type="text" id="quickAppointmentDoctor" required placeholder="e.g., Dr. Smith">
+                    </div>
+                    <div class="form-group">
+                        <label for="quickAppointmentDate">Date *</label>
+                        <input type="date" id="quickAppointmentDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="quickAppointmentTime">Time *</label>
+                        <select id="quickAppointmentTime" required>
+                            <option value="">Select time</option>
+                            <option value="09:00">09:00 AM</option>
+                            <option value="10:00">10:00 AM</option>
+                            <option value="11:00">11:00 AM</option>
+                            <option value="02:00">02:00 PM</option>
+                            <option value="03:00">03:00 PM</option>
+                            <option value="04:00">04:00 PM</option>
+                            <option value="05:00">05:00 PM</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="quickAppointmentType">Type *</label>
+                        <select id="quickAppointmentType" required>
+                            <option value="">Select type</option>
+                            <option value="in-person">In-Person Visit</option>
+                            <option value="telemedicine">Video Consultation</option>
+                            <option value="voice-call">Phone Call</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="quickAppointmentReason">Reason for Visit</label>
+                        <textarea id="quickAppointmentReason" rows="3" placeholder="e.g., General checkup, Flu symptoms, Follow-up visit..."></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeQuickAppointmentModal()">Cancel</button>
+                <button class="btn btn-success" onclick="bookQuickAppointment()">✅ Schedule Appointment</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Book Appointment Modal -->
+        <div id="appointmentModal" class="modal hidden">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Book Appointment</h2>
+                    <button class="close-btn" id="closeAppointmentModal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <form id="appointmentForm">
+                        <div class="form-group">
+                            <label for="appointmentPatient">Patient *</label>
+                            <select id="appointmentPatient" required>
+                                <option value="">Select patient</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="appointmentDoctor">Healthcare Provider *</label>
+                            <input type="text" id="appointmentDoctor" required placeholder="Doctor name">
+                        </div>
+                        <div class="form-group">
+                            <label for="appointmentDate">Date *</label>
+                            <input type="date" id="appointmentDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="appointmentTime">Time *</label>
+                            <select id="appointmentTime" required>
+                                <option value="">Select time</option>
+                                <option value="09:00">09:00 AM</option>
+                                <option value="10:00">10:00 AM</option>
+                                <option value="11:00">11:00 AM</option>
+                                <option value="02:00">02:00 PM</option>
+                                <option value="03:00">03:00 PM</option>
+                                <option value="04:00">04:00 PM</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="appointmentType">Type *</label>
+                            <select id="appointmentType" required>
+                                <option value="">Select type</option>
+                                <option value="in-person">In-Person</option>
+                                <option value="telemedicine">Telemedicine</option>
+                                <option value="voice-call">Voice Call</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="appointmentReason">Reason for Visit</label>
+                            <textarea id="appointmentReason" rows="3"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Book Appointment</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Appointment History Page -->
+        <section id="page-history" class="page hidden">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Appointment History</h2>
+                </div>
+
+                <div class="filter-section">
+                    <select id="historyFilter">
+                        <option value="all">All Appointments</option>
+                        <option value="upcoming">Upcoming</option>
+                        <option value="past">Past</option>
+                        <option value="emergency">Emergency Alerts</option>
+                    </select>
+                </div>
+
+                <div id="historyList" class="history-list">
+                    <p class="empty-state">No history</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Profile Page -->
+        <section id="page-profile" class="page hidden">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Profile</h2>
+                </div>
+
+                <div class="profile-card">
+                    <div id="profileContent"></div>
+                    <button id="editProfileBtn" class="btn btn-primary">Edit Profile</button>
+                    <button id="exportDataBtn" class="btn btn-secondary">Export Data</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Chatbot Section -->
+        <div id="chatbotWidget" class="chatbot-widget hidden">
+            <div class="chatbot-header">
+                <h3>🏥 Health Assistant</h3>
+                <select id="chatbotLanguage" class="language-select" onchange="changeChatbotLanguage(this.value)">
+                    <option value="en">🇬🇧 English</option>
+                    <option value="es">🇪🇸 Español</option>
+                    <option value="fr">🇫🇷 Français</option>
+                    <option value="de">🇩🇪 Deutsch</option>
+                    <option value="hi">🇮🇳 हिन्दी</option>
+                    <option value="pt">🇵🇹 Português</option>
+                    <option value="ja">🇯🇵 日本語</option>
+                    <option value="zh">🇨🇳 中文</option>
+                    <option value="ta">🇮🇳 தமிழ்</option>
+                </select>
+                <button class="chatbot-close" id="closeChatbot">&times;</button>
+            </div>
+            <div id="chatbotMessages" class="chatbot-messages"></div>
+            <form id="chatbotForm" class="chatbot-form">
+                <input type="text" id="chatbotInput" placeholder="Ask a health question..." autocomplete="off">
+                <button type="submit" class="btn-send">Send</button>
+            </form>
+        </div>
+    </main>
+
+    <!-- Telemedicine Call Modal -->
+    <div id="callModal" class="modal hidden">
+        <div class="modal-content call-modal">
+            <div class="modal-header">
+                <h2>Video Call</h2>
+                <button class="close-btn" id="closeCall">&times;</button>
+            </div>
+            <div class="modal-body call-body">
+                <div class="video-container">
+                    <video id="localVideo" autoplay muted></video>
+                    <video id="remoteVideo" autoplay></video>
+                </div>
+                <div class="call-controls">
+                    <button id="toggleAudio" class="call-btn">🎤</button>
+                    <button id="toggleVideo" class="call-btn">📹</button>
+                    <button id="endCall" class="call-btn btn-danger">End Call</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <!-- Scripts -->
+    <script src="js/language-manager.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/patients.js"></script>
+    <script src="js/appointments.js"></script>
+    <script src="js/telemedicine.js"></script>
+    <script src="js/emergency.js"></script>
+    <script src="COMPREHENSIVE_MEDICAL_DATABASE.js"></script>
+    <script src="ENHANCED_MEDICAL_DATABASE.js"></script>
+    <script src="NORMAL_MEDICAL_CONDITIONS.js"></script>
+    <script src="TAMIL_MEDICAL_DATABASE.js"></script>
+    <script src="js/multilingual-chatbot.js"></script>
+    <script src="js/enhanced-chatbot-handler.js"></script>
+    <script src="js/chatbot-integration.js"></script>
+    <script src="js/database-loader.js"></script>
+    <script src="js/chatbot.js"></script>
+    <script src="js/history.js"></script>
+    <script src="js/profile.js"></script>
+    <script src="js/notifications.js"></script>
+    <script src="js/password-reset.js"></script>
+    <script src="js/eprescription.js"></script>
+    <script src="js/medicine-reminder.js"></script>
+    <script src="js/medicine-preboking.js"></script>
+    <script src="js/medicine-alert-popup.js"></script>
+    <script src="js/quick-appointment.js"></script>
+    <script src="js/app.js"></script>
+
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('service-worker.js').catch(err => {
+                console.log('Service Worker registration failed:', err);
+            });
+        }
+    </script>
+</body>
+</html>

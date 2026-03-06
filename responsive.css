@@ -1,0 +1,422 @@
+/* MediBridge Responsive CSS - Mobile & Tablet Design */
+
+/* Mobile First - Base Mobile Styles */
+@media (max-width: 640px) {
+    html {
+        font-size: 14px;
+    }
+
+    h1 { font-size: 1.5rem; }
+    h2 { font-size: 1.3rem; }
+    h3 { font-size: 1.1rem; }
+
+    .navbar-container {
+        padding: 0.75rem;
+    }
+
+    .navbar-brand h1 {
+        font-size: 1.3rem;
+    }
+
+    .navbar-menu {
+        position: fixed;
+        top: 60px;
+        left: -100%;
+        flex-direction: column;
+        background-color: white;
+        width: 100%;
+        text-align: center;
+        transition: 0.3s;
+        box-shadow: 0 10px 27px rgba(0, 0, 0, 0.05);
+        gap: 0;
+        z-index: 999;
+    }
+
+    .navbar-menu.active {
+        left: 0;
+    }
+
+    .navbar-menu a {
+        display: block;
+        padding: 1rem;
+        border-bottom: 1px solid #f1f1f1;
+    }
+
+    .navbar-toggle {
+        display: block;
+    }
+
+    .container {
+        padding: 1rem;
+    }
+
+    .main-container {
+        padding: 1rem 0;
+    }
+
+    /* Login */
+    .login-box {
+        padding: 1.5rem 1rem;
+        width: 90%;
+    }
+
+    .login-header h2 {
+        font-size: 1.5rem;
+    }
+
+    /* Dashboard */
+    .dashboard-header h2 {
+        font-size: 1.5rem;
+    }
+
+    .emergency-button {
+        padding: 1rem 2rem;
+        font-size: 1.2rem;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .stat-card {
+        padding: 1rem;
+    }
+
+    .stat-card h3 {
+        font-size: 1.5rem;
+    }
+
+    .action-buttons {
+        grid-template-columns: 1fr 1fr;
+        gap: 0.75rem;
+    }
+
+    .action-btn {
+        padding: 1rem;
+        font-size: 0.9rem;
+    }
+
+    /* Section Headers */
+    .section-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    .section-header button {
+        width: 100%;
+    }
+
+    /* Cards */
+    .patient-card,
+    .appointment-card,
+    .history-card {
+        padding: 1rem;
+    }
+
+    .card-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+
+    .card-title {
+        font-size: 1.1rem;
+    }
+
+    .card-footer {
+        flex-direction: column;
+    }
+
+    .card-footer button {
+        width: 100%;
+    }
+
+    /* Modals */
+    .modal-content {
+        width: 95%;
+        margin: 1rem;
+    }
+
+    .modal-header,
+    .modal-body,
+    .modal-footer {
+        padding: 1rem;
+    }
+
+    .modal-footer {
+        flex-direction: column;
+    }
+
+    .modal-footer button {
+        width: 100%;
+    }
+
+    .form-group {
+        margin-bottom: 1rem;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    input[type="tel"],
+    input[type="date"],
+    input[type="number"],
+    select,
+    textarea {
+        padding: 0.75rem;
+        font-size: 16px; /* Prevents zoom on iOS */
+    }
+
+    label {
+        font-size: 0.9rem;
+    }
+
+    /* Chatbot */
+    .chatbot-widget {
+        width: 100%;
+        height: 100%;
+        right: 0;
+        bottom: 0;
+        border-radius: 0;
+        max-width: none;
+        max-height: none;
+    }
+
+    .chatbot-messages {
+        padding: 0.75rem;
+    }
+
+    .chatbot-form {
+        padding: 0.75rem;
+    }
+
+    /* Buttons */
+    .btn {
+        padding: 0.75rem 1rem;
+        font-size: 1rem;
+    }
+
+    .btn-large {
+        padding: 1.5rem 2rem;
+        font-size: 1rem;
+    }
+
+    /* Search */
+    .search-bar input {
+        font-size: 1rem;
+    }
+
+    /* Filter */
+    .filter-section select {
+        width: 100%;
+        min-width: auto;
+    }
+
+    /* Profile */
+    .profile-card {
+        padding: 1rem;
+    }
+
+    .profile-card button {
+        width: 100%;
+        margin-right: 0;
+        margin-bottom: 0.5rem;
+    }
+
+    /* Video Call */
+    .call-modal {
+        max-width: 100%;
+    }
+
+    .call-body {
+        padding: 0.5rem;
+    }
+
+    #localVideo {
+        width: 30%;
+        height: 30%;
+    }
+
+    .call-controls {
+        gap: 0.5rem;
+    }
+
+    .call-btn {
+        width: 45px;
+        height: 45px;
+        font-size: 1.2rem;
+    }
+
+    /* Toast */
+    .toast-container {
+        left: 10px;
+        right: 10px;
+        bottom: 10px;
+    }
+
+    .toast {
+        max-width: none;
+    }
+}
+
+/* Tablet Styles (641px - 1024px) */
+@media (min-width: 641px) and (max-width: 1024px) {
+    html {
+        font-size: 15px;
+    }
+
+    .navbar-container {
+        padding: 1rem;
+    }
+
+    .container {
+        padding: 1.5rem;
+    }
+
+    /* Login */
+    .login-box {
+        max-width: 450px;
+    }
+
+    /* Dashboard */
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.25rem;
+    }
+
+    .action-buttons {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    /* Lists */
+    .patients-list,
+    .appointments-list,
+    .history-list {
+        grid-template-columns: 1fr;
+    }
+
+    /* Modals */
+    .modal-content {
+        width: 80%;
+    }
+
+    /* Chatbot */
+    .chatbot-widget {
+        width: 380px;
+        height: 550px;
+    }
+
+    /* Video Call */
+    .video-container {
+        padding-bottom: 56.25%;
+    }
+
+    #localVideo {
+        width: 20%;
+        height: 20%;
+    }
+}
+
+/* Desktop Styles (1025px+) */
+@media (min-width: 1025px) {
+    .navbar-menu.active {
+        left: 0;
+    }
+
+    .navbar-toggle {
+        display: none;
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .action-buttons {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    .patients-list,
+    .appointments-list,
+    .history-list {
+        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    }
+
+    .modal-content {
+        width: 600px;
+    }
+}
+
+/* Large Desktop (1441px+) */
+@media (min-width: 1441px) {
+    .container {
+        max-width: 1400px;
+    }
+
+    .patients-list,
+    .appointments-list,
+    .history-list {
+        grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    }
+}
+
+/* Touch Device Adjustments */
+@media (hover: none) {
+    .btn:hover,
+    .action-btn:hover,
+    .stat-card:hover,
+    .patient-card:hover,
+    .appointment-card:hover,
+    .history-card:hover {
+        transform: none;
+    }
+
+    input,
+    select,
+    textarea {
+        font-size: 16px; /* Prevent iOS zoom */
+    }
+}
+
+/* Print Styles */
+@media print {
+    .navbar,
+    .navbar-toggle,
+    .action-buttons,
+    .chatbot-widget,
+    .toast-container {
+        display: none;
+    }
+
+    body {
+        background: white;
+    }
+
+    .container {
+        width: 100%;
+        max-width: 100%;
+    }
+}
+
+/* Landscape Orientation */
+@media (orientation: landscape) and (max-height: 600px) {
+    .main-container {
+        min-height: auto;
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.75rem;
+    }
+
+    .action-buttons {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 0.5rem;
+    }
+
+    .action-btn {
+        padding: 0.75rem;
+        font-size: 0.85rem;
+    }
+}

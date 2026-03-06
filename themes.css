@@ -1,0 +1,344 @@
+/* MediBridge Themes */
+
+/* Dark Mode Theme */
+body.dark-theme {
+    --primary: #4a9eff;
+    --primary-dark: #3a7edf;
+    --primary-light: #6ab3ff;
+    --secondary: #50db9b;
+    --gray-100: #1a1a1a;
+    --gray-200: #2d2d2d;
+    --gray-300: #404040;
+    --gray-400: #535353;
+    --gray-500: #808080;
+    --gray-600: #a0a0a0;
+    --gray-700: #b0b0b0;
+    --gray-800: #d0d0d0;
+    --gray-900: #f0f0f0;
+    background-color: #000a3d;
+    color: var(--gray-800);
+}
+
+body.dark-theme .navbar,
+body.dark-theme .login-box,
+body.dark-theme .modal-content,
+body.dark-theme .patient-card,
+body.dark-theme .appointment-card,
+body.dark-theme .history-card,
+body.dark-theme .stat-card,
+body.dark-theme .actions-section,
+body.dark-theme .profile-card,
+body.dark-theme .chatbot-widget {
+    background: var(--gray-200);
+    color: var(--gray-800);
+}
+
+body.dark-theme .nav-link {
+    color: var(--gray-600);
+}
+
+body.dark-theme .nav-link:hover,
+body.dark-theme .nav-link.active {
+    background: var(--primary-light);
+    color: white;
+}
+
+body.dark-theme input,
+body.dark-theme select,
+body.dark-theme textarea {
+    background: var(--gray-300);
+    color: var(--gray-800);
+    border-color: var(--gray-400);
+}
+
+body.dark-theme input:focus,
+body.dark-theme select:focus,
+body.dark-theme textarea:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(74, 158, 255, 0.2);
+}
+
+body.dark-theme label {
+    color: var(--gray-800);
+}
+
+body.dark-theme h1,
+body.dark-theme h2,
+body.dark-theme h3,
+body.dark-theme h4,
+body.dark-theme h5,
+body.dark-theme h6 {
+    color: var(--gray-900);
+}
+
+body.dark-theme .modal {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+body.dark-theme .card-title {
+    color: var(--gray-900);
+}
+
+body.dark-theme .chatbot-message.bot {
+    background: var(--gray-300);
+    color: var(--gray-900);
+}
+
+body.dark-theme .close-btn {
+    color: var(--gray-700);
+}
+
+body.dark-theme .close-btn:hover {
+    color: var(--danger);
+}
+
+body.dark-theme .search-bar input {
+    background: var(--gray-300);
+    color: var(--gray-800);
+}
+
+body.dark-theme a {
+    color: var(--primary-light);
+}
+
+body.dark-theme a:hover {
+    color: var(--primary);
+}
+
+/* Green Healthcare Theme (Light) */
+body.health-green-theme {
+    --primary: #00a651;
+    --primary-dark: #008c44;
+    --primary-light: #00c860;
+    --secondary: #0066cc;
+    --danger: #e74c3c;
+    --warning: #f39c12;
+    --success: #27ae60;
+}
+
+body.health-green-theme .navbar {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+}
+
+body.health-green-theme .navbar-brand h1,
+body.health-green-theme .navbar-brand h1 {
+    color: white;
+}
+
+body.health-green-theme .login-container {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+}
+
+body.health-green-theme .btn-primary {
+    background: var(--primary);
+}
+
+body.health-green-theme .btn-primary:hover {
+    background: var(--primary-dark);
+}
+
+body.health-green-theme .stat-card h3 {
+    color: var(--primary);
+}
+
+body.health-green-theme .patient-card,
+body.health-green-theme .appointment-card,
+body.health-green-theme .history-card {
+    border-left-color: var(--primary);
+}
+
+body.health-green-theme .emergency-button {
+    background-color: #FF6B6B;
+    border-color: #FF6B6B;
+    box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3);
+}
+
+body.health-green-theme .emergency-button:hover {
+    background-color: #FF5252;
+    border-color: #FF5252;
+}
+
+/* Blue Medical Theme */
+body.medical-blue-theme {
+    --primary: #0066cc;
+    --primary-dark: #0052a3;
+    --primary-light: #0073e6;
+    --secondary: #00a680;
+    --danger: #cc0000;
+}
+
+body.medical-blue-theme .navbar {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+}
+
+body.medical-blue-theme .navbar-brand h1 {
+    color: white;
+}
+
+body.medical-blue-theme .login-container {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+}
+
+/* High Contrast Theme (Accessibility) */
+body.high-contrast-theme {
+    --primary: #000000;
+    --primary-dark: #000000;
+    --primary-light: #333333;
+    --gray-100: #ffffff;
+    --gray-200: #f5f5f5;
+    --gray-300: #cccccc;
+    --gray-800: #000000;
+    --gray-900: #000000;
+    --danger: #ff0000;
+    --success: #008000;
+}
+
+body.high-contrast-theme {
+    background-color: #000a3d;
+    color: #ffffff;
+}
+
+body.high-contrast-theme .navbar,
+body.high-contrast-theme .modal-content {
+    border: 3px solid #000000;
+}
+
+body.high-contrast-theme input,
+body.high-contrast-theme select,
+body.high-contrast-theme textarea {
+    border: 2px solid #000000;
+}
+
+body.high-contrast-theme .btn {
+    border: 2px solid #000000;
+    font-weight: 700;
+}
+
+body.high-contrast-theme h1,
+body.high-contrast-theme h2,
+body.high-contrast-theme h3,
+body.high-contrast-theme h4,
+body.high-contrast-theme h5,
+body.high-contrast-theme h6 {
+    font-weight: 700;
+}
+
+/* Sepia Theme (Readability) */
+body.sepia-theme {
+    background-color: #000a3d;
+    color: #ffffff;
+}
+
+body.sepia-theme {
+    --primary: #8b5a3c;
+    --primary-dark: #704830;
+    --gray-900: #3e2723;
+}
+
+body.sepia-theme .login-container {
+    background: linear-gradient(135deg, #8b5a3c 0%, #a0703c 100%);
+}
+
+body.sepia-theme .navbar,
+body.sepia-theme .login-box,
+body.sepia-theme .modal-content {
+    background: #fef5e7;
+    color: #5c4033;
+}
+
+/* Animations for Theme Transitions */
+body {
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.navbar,
+.login-box,
+.modal-content,
+input,
+select,
+textarea {
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Reduced Motion for Accessibility */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Font Size Adjustments for Accessibility */
+@media (prefers-reduced-transparency: reduce) {
+    .modal {
+        background-color: rgba(0, 0, 0, 0.8);
+    }
+}
+
+/* Forced Colors Mode (Windows High Contrast) */
+@media (forced-colors: active) {
+    .btn,
+    .action-btn,
+    input,
+    select,
+    textarea {
+        border: 1px solid canvasText;
+    }
+
+    .btn-primary,
+    .btn-danger,
+    .btn-success,
+    .btn-secondary {
+        background-color: Canvas;
+        color: CanvasText;
+        border: 2px solid CanvasText;
+    }
+}
+
+/* Cherry Red Theme */
+body.cherry-red-theme {
+    background-color: #c41e3a;
+}
+
+body.cherry-red-theme .page {
+    background-color: #c41e3a;
+}
+
+body.cherry-red-theme .dashboard-header {
+    color: white;
+}
+
+body.cherry-red-theme .welcome-text {
+    color: #ffe0e0;
+}
+
+body.cherry-red-theme .stat-card,
+body.cherry-red-theme .patient-card,
+body.cherry-red-theme .appointment-card,
+body.cherry-red-theme .history-card {
+    background: white;
+    box-shadow: 0 2px 8px rgba(196, 30, 58, 0.2);
+}
+
+body.cherry-red-theme .stat-card h3 {
+    color: #c41e3a;
+}
+
+body.cherry-red-theme .patient-card,
+body.cherry-red-theme .appointment-card,
+body.cherry-red-theme .history-card {
+    border-left-color: #c41e3a;
+}
+
+body.cherry-red-theme .actions-section {
+    background: white;
+}
+
+body.cherry-red-theme .btn-primary {
+    background: #c41e3a;
+}
+
+body.cherry-red-theme .btn-primary:hover {
+    background: #a01830;
+}
