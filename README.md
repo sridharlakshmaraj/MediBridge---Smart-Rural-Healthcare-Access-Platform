@@ -4,55 +4,55 @@ A Progressive Web Application (PWA) for rural healthcare access, enabling patien
 
 ## Features
 
-✅ **User Authentication**
+ **User Authentication**
 - Patient and Healthcare Provider roles
 - Local authentication with session management
 - Secure user profiles
 
-✅ **Patient Management**
+ **Patient Management**
 - Add and manage patient records
 - Track medical history and diagnoses
 - Search and view patient information
 - Healthcare providers can manage their patient list
 
-✅ **Appointment System**
+ **Appointment System**
 - Book appointments with flexible scheduling
 - Multiple appointment types (In-Person, Telemedicine, Voice Call)
 - Appointment history and filtering
 - Cancel and reschedule options
 
-✅ **Telemedicine Support**
+ **Telemedicine Support**
 - WebRTC-based peer-to-peer video/voice calls
 - Call history tracking
 - Audio and video toggle controls
 - Fallback chat option
 
-✅ **Emergency Button**
+ **Emergency Button**
 - One-click emergency alerts
 - Location sharing (with permission)
 - Notification to nearby healthcare providers
 - Emergency history tracking
 
-✅ **Health Chatbot**
+ **Health Chatbot**
 - AI-powered health Q&A assistant
 - Common health concerns database
 - Chat history in LocalStorage
 - 24/7 health guidance
 
-✅ **Progressive Web App**
+ **Progressive Web App**
 - Offline functionality
 - Service Worker caching
 - Installable to home screen
 - Push notifications
 - Responsive mobile-first design
 
-✅ **Appointment History**
+ **Appointment History**
 - View all appointments and emergencies
 - Filter by status (upcoming, past, completed)
 - Download appointment records
 - Export appointment summaries
 
-✅ **User Profiles**
+ **User Profiles**
 - Edit profile information
 - Data export functionality
 - Account statistics
@@ -274,17 +274,17 @@ Edit `chatbot.js` `initializeQA()` method to add Q&A pairs.
 
 ## Testing Checklist
 
-- ✅ Login/Register functionality
-- ✅ Patient list management
-- ✅ Appointment booking
-- ✅ Appointment filtering and search
-- ✅ Emergency button functionality
-- ✅ Chatbot Q&A
-- ✅ Profile editing
-- ✅ Data export
-- ✅ Offline access (with Service Worker)
-- ✅ Responsive design (mobile, tablet, desktop)
-- ✅ PWA installation
+-  Login/Register functionality
+-  Patient list management
+-  Appointment booking
+-  Appointment filtering and search
+-  Emergency button functionality
+-  Chatbot Q&A
+-  Profile editing
+-  Data export
+-  Offline access (with Service Worker)
+-  Responsive design (mobile, tablet, desktop)
+-  PWA installation
 
 ## Support & Feedback
 
